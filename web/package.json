@@ -1,0 +1,23 @@
+{
+  "name": "nzt_web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "koa": "^2.4.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.3.0",
+    "koa-static": "^4.0.2",
+    "koa2-cors": "^2.0.5",
+    "moment": "^2.20.1",
+    "mysql-helper-simple": "^1.1.2",
+    "squel": "^5.12.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "lienren",
+  "license": "ISC"
+}
