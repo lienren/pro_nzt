@@ -2,7 +2,7 @@
  * @Author: Lienren 
  * @Date: 2018-01-25 17:25:23 
  * @Last Modified by: Lienren
- * @Last Modified time: 2018-01-28 16:13:40
+ * @Last Modified time: 2018-02-09 14:18:39
  */
 ('use strict');
 const squel = require('squel');
@@ -19,7 +19,7 @@ router
       let sql = squel
         .select()
         .from('print_order')
-        .where('ordersn = ?', ctx.params.ordersn)
+        .where('right(ordersn,9) = ?', ctx.params.ordersn)
         .toParam();
 
       let result = await ctx.db.query({

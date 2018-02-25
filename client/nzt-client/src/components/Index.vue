@@ -201,17 +201,17 @@ import _ from 'lodash'
 import moment from 'moment'
 
 // eslint-disable-next-line
-var printNames = []
+  var printNames = []
 // eslint-disable-next-line
-var localPrintName = ''
+  var localPrintName = ''
 // eslint-disable-next-line
-window.getPrintNameList = function () {
+  window.getPrintNameList = function () {
   for (let i = 0, j = arguments.length; i < j; i++) {
     printNames.push(arguments[i])
   }
 }
 // eslint-disable-next-line
-window.setPrintName = function() {
+  window.setPrintName = function () {
   localPrintName = arguments[0]
 }
 
@@ -280,7 +280,7 @@ export default {
       sysLastTime: '正在获取...'
     }
   },
-  created () {},
+  created () { },
   mounted () {
     this.$nextTick(() => {
       this.init()
@@ -295,21 +295,24 @@ export default {
   methods: {
     init () {
       this.initWH()
-      this.getOrders({callback: (result) => {
-        this.loadMenuTableData1(result)
-      }})
+      this.searchCondition1()
 
       // 获取服务器状态
       this.getServerStatus()
       setInterval(() => {
         this.getServerStatus()
       }, 60 * 1000)
+
+      const end = new Date()
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+      this.menuDialogFormPrinttime2 = [start, end]
     },
     initWH () {
       let wh = this.getWH()
       this.tabHeight = wh.height - 40 - 27 - 60
     },
-    getOrders ({pstatue = [0], lordersn = '', ordersn = '', realname = '', mobile = '', paystime = 0, payetime = 253402271999, printstime = 0, printetime = 253402271999, callback = (result) => {}}) {
+    getOrders ({ pstatue = [0], lordersn = '', ordersn = '', realname = '', mobile = '', paystime = 0, payetime = 253402271999, printstime = 0, printetime = 253402271999, callback = (result) => { } }) {
       const loading = this.$loading({
         lock: true,
         text: '加载中...',
@@ -351,7 +354,7 @@ export default {
 
             setTimeout(function () {
               // eslint-disable-next-line
-              window.boundEvent.raiseEvent('formclose')
+                window.boundEvent.raiseEvent('formclose')
             }, 500)
           })
           .catch(() => {
@@ -365,17 +368,11 @@ export default {
 
         switch (this.menuIndex) {
           case 1:
-            this.getOrders({callback: (result) => {
-              this.loadMenuTableData1(result)
-            }})
+            this.searchCondition1()
             this.clearSearchCondition2()
             break
           case 2:
-            this.getOrders({
-              pstatue: [1],
-              callback: (result) => {
-                this.loadMenuTableData2(result)
-              }})
+            this.searchCondition2()
             this.clearSearchCondition1()
             break
           case 3:
@@ -398,7 +395,10 @@ export default {
       this.menuDialogFormRealName2 = ''
       this.menuDialogFormMobile2 = ''
       this.menuDialogFormPaytime2 = ''
-      this.menuDialogFormPrinttime2 = ''
+      const end = new Date()
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+      this.menuDialogFormPrinttime2 = [start, end]
     },
     searchCondition1 () {
       let paystime = 0
@@ -416,7 +416,7 @@ export default {
         payetime: payetime,
         callback: (result) => {
           this.loadMenuTableData1(result)
-        }})
+        } })
       this.menuDialogFormVisible1 = false
     },
     searchCondition2 () {
@@ -444,7 +444,7 @@ export default {
         printetime: printetime,
         callback: (result) => {
           this.loadMenuTableData2(result)
-        }})
+        } })
       this.menuDialogFormVisible2 = false
     },
     loadMenuTableData1 (result) {
@@ -540,7 +540,7 @@ export default {
         })
       }
     },
-    printOrder ({id, order, isloading = true, callback = () => {}}) {
+    printOrder ({ id, order, isloading = true, callback = () => { } }) {
       let loading = null
       if (isloading) {
         loading = this.$loading({
@@ -552,25 +552,25 @@ export default {
       }
 
       /*
-      public string ordersn { get; set; }
-        public string username { get; set; }
-        public string userphone { get; set; }
-        public string address { get; set; }
-        public string storename { get; set; }
-        public string storeemail { get; set; }
-        public string storephone { get; set; }
-        public DateTime addtime { get; set; }
-        public List<QRPrintOrderProduct> products { get; set; }
+        public string ordersn { get; set; }
+          public string username { get; set; }
+          public string userphone { get; set; }
+          public string address { get; set; }
+          public string storename { get; set; }
+          public string storeemail { get; set; }
+          public string storephone { get; set; }
+          public DateTime addtime { get; set; }
+          public List<QRPrintOrderProduct> products { get; set; }
 
-        public string proname { get; set; }
-        public string skuname { get; set; }
-        public int count { get; set; }
-      */
+          public string proname { get; set; }
+          public string skuname { get; set; }
+          public int count { get; set; }
+        */
 
       // eslint-disable-next-line
-      window.boundEvent.raiseEvent('printorder', JSON.stringify(
+        window.boundEvent.raiseEvent('printorder', JSON.stringify(
         {
-          ordersn: order.ordersn,
+          ordersn: order.ordersn.substring(order.ordersn.length - 9),
           username: order.realname,
           userphone: order.mobile,
           address: order.address,
@@ -600,7 +600,7 @@ export default {
         return
       }
       // eslint-disable-next-line
-      window.boundEvent.raiseEvent('setprintname', this.menuPrintName)
+        window.boundEvent.raiseEvent('setprintname', this.menuPrintName)
 
       // 更新打印机名称
       localPrintName = this.menuPrintName
@@ -619,7 +619,7 @@ export default {
     },
     getWH () {
       // eslint-disable-next-line
-      let w = window,
+        let w = window,
         d = document,
         e = d.documentElement,
         g = d.getElementsByTagName('body')[0],
@@ -631,79 +631,79 @@ export default {
 }
 </script>
 <style>
-.el-menu {
-  border: 0;
-}
-.el-table {
-  font-size: 12px;
-}
-.el-table td {
-  padding: 6px 0;
-}
-.el-icon-arrow-down {
-  font-size: 12px;
-}
-.el-main {
-  padding: 0 15px;
-}
-.nzt-main {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-.nzt-side-menu {
-  position: relative;
-  background-color: #20222a;
-  color: #fff;
-  width: 100%;
-  overflow: hidden;
-}
-.nzt-side-title {
-  text-align: center;
-  line-height: 50px;
-}
-.nzt-side-title div {
-  color: #fff;
-  font-size: 16px;
-}
-.nzt-version {
-  position: absolute;
-  bottom: 10px;
-}
-.nzt-server-status {
-  position: absolute;
-  left:20px;
-  bottom:30px;
-}
-.nzt-server-status div {
-  margin-bottom:5px;
-  color:rgba(255, 255, 255, 0.7);
-  font-size:12px;
-}
-.nzt-server-status .succ {
-  display: inline-block;
-  background-color:#67C23A;
-  color:#fff;
-  padding:0 5px;
-  border-radius: 20px;
-  margin-left:5px;
-  font-weight: bold;
-}
-.nzt-server-status .error {
-  display: inline-block;
-  background-color:#E6A23C;
-  color:#fff;
-  padding:0 5px;
-  border-radius: 20px;
-  margin-left:5px;
-  font-weight: bold;
-}
-.nzt-version div {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 10px;
-  white-space: nowrap;
-  transform: scale(0.8, 0.8);
-  -webkit-transform: scale(0.8, 0.8);
-  -moz-transform: scale(0.8, 0.8);
-}
+  .el-menu {
+    border: 0;
+  }
+  .el-table {
+    font-size: 12px;
+  }
+  .el-table td {
+    padding: 6px 0;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
+  .el-main {
+    padding: 0 15px;
+  }
+  .nzt-main {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .nzt-side-menu {
+    position: relative;
+    background-color: #20222a;
+    color: #fff;
+    width: 100%;
+    overflow: hidden;
+  }
+  .nzt-side-title {
+    text-align: center;
+    line-height: 50px;
+  }
+  .nzt-side-title div {
+    color: #fff;
+    font-size: 16px;
+  }
+  .nzt-version {
+    position: absolute;
+    bottom: 10px;
+  }
+  .nzt-server-status {
+    position: absolute;
+    left: 20px;
+    bottom: 30px;
+  }
+  .nzt-server-status div {
+    margin-bottom: 5px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+  }
+  .nzt-server-status .succ {
+    display: inline-block;
+    background-color: #67c23a;
+    color: #fff;
+    padding: 0 5px;
+    border-radius: 20px;
+    margin-left: 5px;
+    font-weight: bold;
+  }
+  .nzt-server-status .error {
+    display: inline-block;
+    background-color: #e6a23c;
+    color: #fff;
+    padding: 0 5px;
+    border-radius: 20px;
+    margin-left: 5px;
+    font-weight: bold;
+  }
+  .nzt-version div {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 10px;
+    white-space: nowrap;
+    transform: scale(0.8, 0.8);
+    -webkit-transform: scale(0.8, 0.8);
+    -moz-transform: scale(0.8, 0.8);
+  }
 </style>

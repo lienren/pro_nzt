@@ -2,7 +2,7 @@
  * @Author: Lienren 
  * @Date: 2018-01-26 16:46:58 
  * @Last Modified by: Lienren
- * @Last Modified time: 2018-01-26 17:04:41
+ * @Last Modified time: 2018-01-30 08:53:41
  */
 ('use strict');
 const fs = require('fs');
@@ -59,6 +59,9 @@ libs.prototype.setunixtimelog = function(unixtime) {
     });
 };
 libs.prototype.setdatalog = function(unixtime, data) {
+  if (data.length === 0) {
+    return;
+  }
   let sql = squel
     .insert()
     .into('sys_datalog')
